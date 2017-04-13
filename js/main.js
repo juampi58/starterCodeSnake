@@ -3,6 +3,7 @@ function Game(options){
   this.rows=options.rows;
   this.columns=options.columns;
   this.snake= options.snake;
+  this.food=undefined;
 
 for(var rowIndex=0 ; rowIndex<this.rows; rowIndex++){
   for(var columnIndex=0 ; columnIndex<this.columns; columnIndex++){
@@ -39,18 +40,28 @@ Game.prototype.assignControlsToKeys=function(){
     switch (e.keyCode) {
       case 37:
         this.snake.goLeft();
-        break;
-        case 38:
-          this.snake.goUp();
           break;
-          case 39:
-            this.snake.goRight();
-            break;
-            case 40:
-              this.snake.goDown();
-              break;
+      case 38:
+        this.snake.goUp();
+          break;
+      case 39:
+        this.snake.goRight();
+          break;
+      case 40:
+        this.snake.goDown();
+          break;
     }
   }.bind(this));
+};
+Game.prototype.generateFood=function(){
+  this.food={
+    row:Math.floor(Math.random()*this.rows),
+    column:Math.floor(Math.random()*this.columns),
+  };
+};
+Game.prototype.drawFood=function(){
+  var selector = '[data-row=' + this.food.row +'][data-column=' + this.food.column +']';
+  $(selector).addClass('food');
 };
 
 
@@ -62,6 +73,8 @@ var game= new Game({
   snake: new Snake()
 });
 game.assignControlsToKeys();
+game.generateFood();
+game.drawFood();
 game.start();
 
 });
