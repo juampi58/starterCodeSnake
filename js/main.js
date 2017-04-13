@@ -32,13 +32,24 @@ Game.prototype.start=function(){
 Game.prototype.update=function(){
   this.snake.moveForward(this.rows, this.columns);
   if( this.snake.hasEatenFood(this.food)){
-    //this.sanke.growUp()
+    this.snake.growUp();
     this.clearFood();
     this.generateFood();
     this.drawFood();
   }
+  if(this.snake.hasEatenItself()){
+    this.stop();
+    alert('GAME OVER');
+  }
   this.clearSnake();
   this.drawSnake();
+};
+
+Game.prototype.stop=function(){
+  if(this.intervalID){
+    clearInterval(this.intervalID);
+  this.intervalID=undefined;
+  }
 };
 
 Game.prototype.clearFood=function(){
@@ -63,6 +74,14 @@ Game.prototype.assignControlsToKeys=function(){
       case 40:
         this.snake.goDown();
           break;
+      case 80:{
+        if(this.intervalID){
+          this.stop();
+        }
+        else{
+          this.start();
+        }}
+        break;
     }
   }.bind(this));
 };
