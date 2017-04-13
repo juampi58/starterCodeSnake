@@ -31,9 +31,22 @@ Game.prototype.start=function(){
 };
 Game.prototype.update=function(){
   this.snake.moveForward(this.rows, this.columns);
+  if( this.snake.hasEatenFood(this.food)){
+    //this.sanke.growUp()
+    this.clearFood();
+    this.generateFood();
+    this.drawFood();
+  }
   this.clearSnake();
   this.drawSnake();
 };
+
+Game.prototype.clearFood=function(){
+  $('.food').removeClass('food');
+  this.food=undefined;
+
+};
+
 Game.prototype.assignControlsToKeys=function(){
   $('body').on('keydown',function(e){
     console.log(e);
