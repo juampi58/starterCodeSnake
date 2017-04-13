@@ -32,7 +32,25 @@ Game.prototype.update=function(){
   this.snake.moveForward(this.rows, this.columns);
   this.clearSnake();
   this.drawSnake();
-
+};
+Game.prototype.assignControlsToKeys=function(){
+  $('body').on('keydown',function(e){
+    console.log(e);
+    switch (e.keyCode) {
+      case 37:
+        this.snake.goLeft();
+        break;
+        case 38:
+          this.snake.goUp();
+          break;
+          case 39:
+            this.snake.goRight();
+            break;
+            case 40:
+              this.snake.goDown();
+              break;
+    }
+  }.bind(this));
 };
 
 
@@ -43,5 +61,7 @@ var game= new Game({
   columns:50,
   snake: new Snake()
 });
+game.assignControlsToKeys();
 game.start();
+
 });
